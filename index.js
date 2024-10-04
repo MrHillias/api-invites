@@ -8,7 +8,7 @@ const sequelize = require("./db_invites");
 const UserModel = require("./models");
 
 const app = express();
-const port = 3000;
+const port = 5000;
 
 // Middleware для обработки JSON
 app.use(bodyParser.json());
@@ -28,8 +28,8 @@ app.post("/invites/:chatId", async (req, res) => {
   const inviteLink = `https://t.me/drive/app?startapp=ref_${uniqueCode}`;
   try {
     await UserModel.create({ chatId, code: uniqueCode, inviteLink });
-    res.status(201).json({ inviteLink });
     await UserModel.save();
+    res.status(201).json({ inviteLink });
   } catch (err) {
     return res.status(400).json({ error: err.message });
   }
@@ -42,7 +42,7 @@ app.get("/invites/:chatId", async (req, res) => {
       res.json(user.inviteLink);
     }
   } catch (error) {
-    res.status(500).json({ error: "Ошибка при поиске пользователя" });
+    //res.status(500).json({ error: "Ошибка при поиске пользователя" });
   }
 });
 
