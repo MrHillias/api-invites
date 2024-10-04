@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const sqlite3 = require("sqlite3").verbose();
 const { v4: uuidv4 } = require("uuid");
+const cors = require("cors");
 
 const sequelize = require("./db_invites");
 const User = require("./models");
