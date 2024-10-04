@@ -29,6 +29,7 @@ app.post("/invites/:chatId", async (req, res) => {
   try {
     await User.create({ chatId, code: uniqueCode, inviteLink });
     res.status(201).json({ inviteLink });
+    await user.save();
   } catch (err) {
     return res.status(400).json({ error: err.message });
   }
