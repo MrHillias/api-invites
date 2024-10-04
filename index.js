@@ -8,7 +8,7 @@ const sequelize = require("./db_invites");
 const UserModel = require("./models");
 
 const app = express();
-const port = 5000;
+const port = 3000;
 
 // Middleware для обработки JSON
 app.use(bodyParser.json());
