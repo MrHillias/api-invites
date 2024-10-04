@@ -42,7 +42,9 @@ app.post("/invites/:chatId", async (req, res) => {
 
 app.get("/invites/:chatId", async (req, res) => {
   try {
-    const user = await User.findOne({ where: { chatId: req.params.chatId } });
+    const user = await UserModel.findOne({
+      where: { chatId: req.params.chatId },
+    });
     if (user) {
       res.json(user.inviteLink);
     }
