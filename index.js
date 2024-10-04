@@ -35,6 +35,15 @@ app.post("/invites/:chatId", async (req, res) => {
   }
 });
 
+app.get("/invites/:chatId", async (req, res) => {
+  try {
+    const user = await User.findOne({ where: { chatId: req.params.chatId } });
+    res.json(user.inviteLink);
+  } catch (error) {
+    res.status(500).json({ error: "Ошибка при поиске пользователя" });
+  }
+});
+
 // Запуск сервера
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
