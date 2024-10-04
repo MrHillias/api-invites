@@ -22,13 +22,18 @@ sequelize
   .then(() => console.log("Соединение с базой данных установлено"))
   .catch((err) => console.error("Невозможно подключиться к базе данных:", err));
 
+// Синхронизация таблиц
+sequelize
+  .sync() // Используйте эту строку, чтобы убедиться, что таблицы созданы
+  .then(() => console.log("Таблицы синхронизированы"))
+  .catch((err) => console.error("Ошибка синхронизации:", err));
+
 app.post("/invites/:chatId", async (req, res) => {
   const chatId = req.params.chatId;
   const uniqueCode = uuidv4();
   const inviteLink = `https://t.me/drive/app?startapp=ref_${uniqueCode}`;
   try {
     await UserModel.create({ chatId, code: uniqueCode, inviteLink });
-    await UserModel.save();
     res.status(201).json({ inviteLink });
   } catch (err) {
     return res.status(400).json({ error: err.message });
@@ -42,7 +47,7 @@ app.get("/invites/:chatId", async (req, res) => {
       res.json(user.inviteLink);
     }
   } catch (error) {
-    //res.status(500).json({ error: "Ошибка при поиске пользователя" });
+    res.status(500).json({ error: "Ошибка при поиске пользователя" });
   }
 });
 
