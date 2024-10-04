@@ -5,7 +5,7 @@ const { v4: uuidv4 } = require("uuid");
 const cors = require("cors");
 
 const sequelize = require("./db_invites");
-const User = require("./models");
+const UserModel = require("./models");
 
 const app = express();
 const port = 3000;
@@ -27,9 +27,9 @@ app.post("/invites/:chatId", async (req, res) => {
   const uniqueCode = uuidv4();
   const inviteLink = `https://t.me/drive/app?startapp=ref_${uniqueCode}`;
   try {
-    await User.create({ chatId, code: uniqueCode, inviteLink });
+    await UserModel.create({ chatId, code: uniqueCode, inviteLink });
     res.status(201).json({ inviteLink });
-    await user.save();
+    await UserModel.save();
   } catch (err) {
     return res.status(400).json({ error: err.message });
   }
